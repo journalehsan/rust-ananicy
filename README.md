@@ -19,6 +19,26 @@ A **blazingly fast**, **memory-safe** Rust implementation of Ananicy (Auto Nice 
 
 ### Installation
 
+#### Automatic Installation (Recommended)
+
+```bash
+# Clone the repository
+git clone https://github.com/journalehsan/rust-ananicy.git
+cd rust-ananicy
+
+# Run the comprehensive installer
+./install.sh
+```
+
+The installer will:
+- Build the optimized release binary
+- Install to `/usr/local/bin/rust-ananicy`
+- Create `/etc/ananicy.d/` with comprehensive default rules
+- Set up systemd service (optional)
+- Configure rules for 200+ popular applications
+
+#### Manual Installation
+
 ```bash
 # Build from source
 cargo build --release
@@ -26,6 +46,9 @@ cargo build --release
 # Install system-wide
 sudo cp target/release/rust-ananicy /usr/local/bin/
 sudo mkdir -p /etc/ananicy.d/
+
+# Copy default configuration
+sudo cp configs/* /etc/ananicy.d/
 ```
 
 ### Configuration
