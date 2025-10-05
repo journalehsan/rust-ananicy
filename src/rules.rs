@@ -53,9 +53,10 @@ pub fn load_types(config_dir: &Path) -> Result<HashMap<String, Type>> {
     let mut types = HashMap::new();
     
     for entry in walkdir(config_dir)? {
-        if entry.file_name().to_string_lossy().ends_with(".types") {
-            info!("Loading types from: {:?}", entry);
-            let content = fs::read_to_string(&entry)?;
+        if let Some(file_name) = entry.file_name() {
+            if file_name.to_string_lossy().ends_with(".types") {
+                info!("Loading types from: {:?}", entry);
+                let content = fs::read_to_string(&entry)?;
             
             for line in content.lines() {
                 let line = line.trim();
@@ -69,6 +70,7 @@ pub fn load_types(config_dir: &Path) -> Result<HashMap<String, Type>> {
             }
         }
     }
+    }
     
     Ok(types)
 }
@@ -77,9 +79,10 @@ pub fn load_rules(config_dir: &Path) -> Result<Vec<Rule>> {
     let mut rules = Vec::new();
     
     for entry in walkdir(config_dir)? {
-        if entry.file_name().to_string_lossy().ends_with(".rules") {
-            info!("Loading rules from: {:?}", entry);
-            let content = fs::read_to_string(&entry)?;
+        if let Some(file_name) = entry.file_name() {
+            if file_name.to_string_lossy().ends_with(".rules") {
+                info!("Loading rules from: {:?}", entry);
+                let content = fs::read_to_string(&entry)?;
             
             for line in content.lines() {
                 let line = line.trim();
@@ -92,6 +95,7 @@ pub fn load_rules(config_dir: &Path) -> Result<Vec<Rule>> {
                 }
             }
         }
+    }
     }
     
     Ok(rules)

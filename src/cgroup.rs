@@ -2,7 +2,7 @@ use std::path::{Path, PathBuf};
 use std::fs;
 use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
-use anyhow::{Result, anyhow};
+use anyhow::Result;
 use log::info;
 
 const CGROUP_FS: &str = "/sys/fs/cgroup";
@@ -69,9 +69,10 @@ pub fn load_cgroups(config_dir: &Path) -> Result<HashMap<String, CgroupControlle
     let mut cgroups = HashMap::new();
     
     for entry in walkdir(config_dir)? {
-        if entry.file_name().to_string_lossy().ends_with(".cgroups") {
-            info!("Loading cgroups from: {:?}", entry);
-            let content = fs::read_to_string(&entry)?;
+        if let Some(file_name) = entry.file_name() {
+            if file_name.to_string_lossy().ends_with(".cgroups") {
+                info!("Loading cgroups from: {:?}", entry);
+                let content = fs::read_to_string(&entry)?;
             
             for line in content.lines() {
                 let line = line.trim();
@@ -88,6 +89,7 @@ pub fn load_cgroups(config_dir: &Path) -> Result<HashMap<String, CgroupControlle
                 }
             }
         }
+    }
     }
     
     Ok(cgroups)

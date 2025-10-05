@@ -1,10 +1,7 @@
 use std::fs;
-use std::path::Path;
 use std::collections::HashMap;
 use anyhow::{Result, anyhow};
 use procfs::process::{Process, Stat};
-use nix::unistd::Pid;
-use nix::sys::signal;
 use log::{debug, warn};
 use crate::rules::Rule;
 use crate::cgroup::CgroupController;
@@ -22,7 +19,7 @@ impl ProcessInfo {
         let cmdline = process.cmdline()
             .unwrap_or_default()
             .into_iter()
-            .map(|s| s.to_string_lossy().to_string())
+            .map(|s| s.to_string())
             .collect();
         
         Ok(Self { process, stat, cmdline })
@@ -147,11 +144,24 @@ impl ProcessInfo {
     pub fn matches_rule(&self, rule: &Rule) -> bool {
         // Check by process name
         if let Some(ref rule_name) = rule.name {
-            if self.name() != rule_name && self.process.exe().ok()
-                .and_then(|p| p.file_name())
-                .and_then(|n| n.to_str()) != Some(rule_name) {
-                return false;
+            // Check process name (comm field)
+            if self.name() == rule_name {
+                return true;
             }
+            
+            // Check executable name
+            if let Ok(exe_path) = self.process.exe() {
+                if let Some(exe_name) = exe_path.file_name() {
+                    if let Some(exe_str) = exe_name.to_str() {
+                        if exe_str == rule_name {
+                            return true;
+                        }
+                    }
+                }
+            }
+            
+            // If we got here, name didn't match
+            return false;
         }
         
         // Check by cmdline patterns
@@ -185,6 +195,8 @@ pub fn scan_processes() -> Result<Vec<ProcessInfo>> {
     
     Ok(processes)
 }
+///
+/// Scan the process table and apply the given rules to matching processes.
 
 pub fn scan_and_apply_rules(
     rules: &[Rule], 
