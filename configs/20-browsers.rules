@@ -1,0 +1,22 @@
+{"name": "chrome", "type": "web-browser", "oom_score_adj": 100}
+{"name": "chromium", "type": "web-browser", "oom_score_adj": 100}
+{"name": "chromium-browser", "type": "web-browser", "oom_score_adj": 100}
+{"name": "chrome", "cmdlines": ["type=renderer"], "nice": 5, "ioclass": "idle", "oom_score_adj": 300}
+{"name": "chrome", "cmdlines": ["type=gpu-process"], "type": "web-browser-media"}
+{"name": "chromium", "cmdlines": ["type=renderer"], "nice": 5, "ioclass": "idle", "oom_score_adj": 300}
+{"name": "chromium", "cmdlines": ["type=gpu-process"], "type": "web-browser-media"}
+{"name": "msedge", "type": "web-browser", "oom_score_adj": 100}
+{"name": "msedge", "cmdlines": ["type=renderer"], "nice": 5, "ioclass": "idle", "oom_score_adj": 300}
+{"name": "msedge", "cmdlines": ["type=gpu-process"], "type": "web-browser-media"}
+{"name": "firefox", "type": "web-browser", "oom_score_adj": 100}
+{"name": "firefox-esr", "type": "web-browser", "oom_score_adj": 100}
+{"name": "Web Content", "type": "web-browser", "nice": 5, "oom_score_adj": 200}
+{"name": "WebExtensions", "type": "web-browser", "nice": 5, "oom_score_adj": 200}
+{"name": "RDD Process", "type": "web-browser-media"}
+{"name": "brave", "type": "web-browser", "oom_score_adj": 100}
+{"name": "brave-browser", "type": "web-browser", "oom_score_adj": 100}
+{"name": "brave", "cmdlines": ["type=renderer"], "nice": 5, "ioclass": "idle", "oom_score_adj": 300}
+{"name": "opera", "type": "web-browser", "oom_score_adj": 100}
+{"name": "opera", "cmdlines": ["type=renderer"], "nice": 5, "ioclass": "idle", "oom_score_adj": 300}
+{"name": "vivaldi-bin", "type": "web-browser", "oom_score_adj": 100}
+{"name": "vivaldi", "cmdlines": ["type=renderer"], "nice": 5, "ioclass": "idle", "oom_score_adj": 300}

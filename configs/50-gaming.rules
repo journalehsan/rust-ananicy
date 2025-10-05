@@ -1,0 +1,26 @@
+{"name": "steam", "type": "game-launcher"}
+{"name": "steamwebhelper", "type": "game-launcher", "nice": 5}
+{"name": "steam.exe", "type": "game-launcher"}
+{"name": "SteamLinuxRuntime", "type": "game"}
+{"name": "lutris", "type": "game-launcher"}
+{"name": "heroic", "type": "game-launcher"}
+{"name": "legendary", "type": "game-launcher"}
+{"name": "bottles", "type": "game-launcher"}
+{"name": "playonlinux", "type": "game-launcher"}
+{"name": "gog-galaxy", "type": "game-launcher"}
+{"name": "wine", "type": "wine-app"}
+{"name": "wine64", "type": "wine-app"}
+{"name": "wine-preloader", "type": "wine-app"}
+{"name": "wineserver", "type": "wine-app"}
+{"name": "proton", "type": "wine-app"}
+{"name": "UnityPlayer.x86_64", "type": "game"}
+{"name": "UnrealEngine", "type": "game"}
+{"name": "Godot", "type": "game"}
+{"name": "java", "cmdlines": ["minecraft"], "type": "game"}
+{"name": "minecraft-launcher", "type": "game-launcher"}
+{"name": "dolphin-emu", "type": "game"}
+{"name": "pcsx2", "type": "game"}
+{"name": "rpcs3", "type": "game"}
+{"name": "yuzu", "type": "game"}
+{"name": "cemu", "type": "game"}
+{"name": "retroarch", "type": "game"}
