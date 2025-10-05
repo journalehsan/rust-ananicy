@@ -7,6 +7,9 @@ sudo cp target/release/rust-ananicy /usr/local/bin/
 # Create configuration directory
 sudo mkdir -p /etc/ananicy.d/
 
+# Copy service file to systemd
+sudo cp rust-ananicy.service /etc/systemd/system/
+
 # Copy configuration files from original ananicy
 # (or create new ones following the same format)
 
