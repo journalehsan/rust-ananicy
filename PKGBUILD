@@ -22,7 +22,7 @@ backup=(
     'etc/ananicy.d/00-default.cgroups'
 )
 source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
-sha256sums=('SKIP')  # Will be updated when creating actual release
+sha256sums=('0e2f134750814762d2442a9a9f54241ffb80292f9470e9435387976a467496bf')  # Will be updated when creating actual release
 
 prepare() {
     cd "$pkgname-$pkgver"
