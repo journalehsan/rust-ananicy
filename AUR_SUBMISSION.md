@@ -24,7 +24,7 @@ Download the release tarball and update the PKGBUILD:
 
 ```bash
 # Download the release
-wget https://codeload.github.com/journalehsan/rust-ananicy/tar.gz/refs/tags/v1?token=AB43R5VT6ML6LXTIBROLLS3I4KNR4
+wget https://github.com/journalehsan/rust-ananicy/archive/v1.0.0.tar.gz
 
 # Generate SHA256 checksum
 sha256sum v1.0.0.tar.gz
