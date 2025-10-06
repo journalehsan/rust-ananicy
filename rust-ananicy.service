@@ -13,6 +13,7 @@ CapabilityBoundingSet=CAP_SYS_NICE CAP_SYS_RESOURCE CAP_KILL
 AmbientCapabilities=CAP_SYS_NICE CAP_SYS_RESOURCE CAP_KILL
 NoNewPrivileges=false
 LimitNICE=-20
+Delegate=yes
 
 [Install]
 WantedBy=multi-user.target

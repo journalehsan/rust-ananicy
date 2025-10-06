@@ -50,8 +50,9 @@ impl CgroupController {
                 Ok(Self { name, path: cpu_path, version, cpu_quota, quota_us, cpu_shares })
             }
             CgroupVersion::V2 => {
-                enable_cpu_controller_v2()?;
-                let v2_path = Path::new(CGROUP_FS).join(&name);
+                let base = v2_delegated_base()?;
+                enable_cpu_controller_v2_at(&base)?;
+                let v2_path = base.join(&name);
                 if !v2_path.exists() {
                     fs::create_dir_all(&v2_path)?;
                 }
@@ -144,8 +145,8 @@ fn detect_cgroup_version() -> CgroupVersion {
     if v2_marker.exists() { CgroupVersion::V2 } else { CgroupVersion::V1 }
 }
 
-fn enable_cpu_controller_v2() -> Result<()> {
-    let controllers_path = Path::new(CGROUP_FS).join("cgroup.controllers");
+fn enable_cpu_controller_v2_at(base: &Path) -> Result<()> {
+    let controllers_path = base.join("cgroup.controllers");
     if !controllers_path.exists() {
         return Ok(());
     }
@@ -155,11 +156,27 @@ fn enable_cpu_controller_v2() -> Result<()> {
         return Ok(());
     }
 
-    let subtree = Path::new(CGROUP_FS).join("cgroup.subtree_control");
+    let subtree = base.join("cgroup.subtree_control");
     let current = fs::read_to_string(&subtree).unwrap_or_default();
     let has_cpu = current.split_whitespace().any(|c| c == "+cpu" || c == "cpu");
     if !has_cpu {
         let _ = fs::write(&subtree, "+cpu");
     }
     Ok(())
+}
+
+fn v2_delegated_base() -> Result<PathBuf> {
+    // Parse /proc/self/cgroup to find our cgroup v2 path and use it as base
+    let content = fs::read_to_string("/proc/self/cgroup").unwrap_or_default();
+    for line in content.lines() {
+        // v2 lines look like: 0::/system.slice/rust-ananicy.service
+        if let Some(rest) = line.split("::").nth(1) {
+            let rel = rest.trim();
+            if rel.starts_with('/') {
+                return Ok(Path::new(CGROUP_FS).join(rel.trim_start_matches('/')));
+            }
+        }
+    }
+    // Fallback to root if parsing failed
+    Ok(PathBuf::from(CGROUP_FS))
 }
