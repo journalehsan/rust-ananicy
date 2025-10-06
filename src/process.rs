@@ -208,9 +208,25 @@ pub fn scan_and_apply_rules(
     for proc in processes {
         for rule in rules {
             if proc.matches_rule(rule) {
+                debug!(
+                    "Rule matched for PID {} ({}): name={:?} type={:?} nice={:?} ioclass={:?} ionice={:?} sched={:?} rtprio={:?} oom={:?} cgroup={:?} cmdlines={:?}",
+                    proc.pid(),
+                    proc.name(),
+                    rule.name,
+                    rule.type_name,
+                    rule.nice,
+                    rule.ioclass,
+                    rule.ionice,
+                    rule.sched,
+                    rule.rtprio,
+                    rule.oom_score_adj,
+                    rule.cgroup,
+                    rule.cmdlines
+                );
                 if let Err(e) = proc.apply_rule(rule, cgroups) {
-                    warn!("Failed to apply rule to PID {}: {}", proc.pid(), e);
+                    warn!("Failed to apply rule to PID {} ({}): {}", proc.pid(), proc.name(), e);
                 } else {
+                    debug!("Applied rule to PID {} ({})", proc.pid(), proc.name());
                     applied += 1;
                 }
                 break; // Apply only first matching rule
