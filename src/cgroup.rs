@@ -3,7 +3,7 @@ use std::fs;
 use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 use anyhow::{Result, Context};
-use log::info;
+use log::{info, warn};
 
 const CGROUP_FS: &str = "/sys/fs/cgroup";
 const PERIOD_US: u64 = 100000;
@@ -61,13 +61,17 @@ impl CgroupController {
                 }
                 let max_value = if cpu_quota >= 100 { String::from("max") } else { quota_us.to_string() };
                 let cpu_max = format!("{} {}", max_value, PERIOD_US);
-                fs::write(v2_path.join("cpu.max"), cpu_max)
-                    .with_context(|| format!("write {}", v2_path.join("cpu.max").display()))?;
+                if let Err(e) = fs::write(v2_path.join("cpu.max"), cpu_max)
+                    .with_context(|| format!("write {}", v2_path.join("cpu.max").display())) {
+                    warn!("Could not set cpu.max: {e}");
+                }
                 let mut weight: u64 = (cpu_quota as u64) * 100;
                 if weight == 0 { weight = 1; }
                 if weight > 10000 { weight = 10000; }
-                fs::write(v2_path.join("cpu.weight"), weight.to_string())
-                    .with_context(|| format!("write {}", v2_path.join("cpu.weight").display()))?;
+                if let Err(e) = fs::write(v2_path.join("cpu.weight"), weight.to_string())
+                    .with_context(|| format!("write {}", v2_path.join("cpu.weight").display())) {
+                    warn!("Could not set cpu.weight: {e}");
+                }
                 Ok(Self { name, path: v2_path, version, cpu_quota, quota_us, cpu_shares })
             }
         }
