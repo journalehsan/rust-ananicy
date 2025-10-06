@@ -124,11 +124,17 @@ pub fn load_cgroups(config_dir: &Path) -> Result<HashMap<String, CgroupControlle
                     }
                     
                     if let Ok(cgroup_def) = serde_json::from_str::<CgroupDef>(line) {
-                        let controller = CgroupController::new(
+                        match CgroupController::new(
                             cgroup_def.cgroup.clone(),
                             cgroup_def.cpu_quota
-                        )?;
-                        cgroups.insert(cgroup_def.cgroup, controller);
+                        ) {
+                            Ok(controller) => {
+                                cgroups.insert(cgroup_def.cgroup, controller);
+                            }
+                            Err(e) => {
+                                warn!("Skipping cgroup '{}' due to error: {e}", cgroup_def.cgroup);
+                            }
+                        }
                     }
                 }
         }
