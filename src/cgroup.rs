@@ -2,7 +2,7 @@ use std::path::{Path, PathBuf};
 use std::fs;
 use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
-use anyhow::Result;
+use anyhow::{Result, Context};
 use log::info;
 
 const CGROUP_FS: &str = "/sys/fs/cgroup";
@@ -44,9 +44,12 @@ impl CgroupController {
                 if !cpu_path.exists() {
                     fs::create_dir_all(&cpu_path)?;
                 }
-                fs::write(cpu_path.join("cpu.cfs_period_us"), PERIOD_US.to_string())?;
-                fs::write(cpu_path.join("cpu.cfs_quota_us"), quota_us.to_string())?;
-                fs::write(cpu_path.join("cpu.shares"), cpu_shares.to_string())?;
+                fs::write(cpu_path.join("cpu.cfs_period_us"), PERIOD_US.to_string())
+                    .with_context(|| format!("write {}", cpu_path.join("cpu.cfs_period_us").display()))?;
+                fs::write(cpu_path.join("cpu.cfs_quota_us"), quota_us.to_string())
+                    .with_context(|| format!("write {}", cpu_path.join("cpu.cfs_quota_us").display()))?;
+                fs::write(cpu_path.join("cpu.shares"), cpu_shares.to_string())
+                    .with_context(|| format!("write {}", cpu_path.join("cpu.shares").display()))?;
                 Ok(Self { name, path: cpu_path, version, cpu_quota, quota_us, cpu_shares })
             }
             CgroupVersion::V2 => {
@@ -58,11 +61,13 @@ impl CgroupController {
                 }
                 let max_value = if cpu_quota >= 100 { String::from("max") } else { quota_us.to_string() };
                 let cpu_max = format!("{} {}", max_value, PERIOD_US);
-                fs::write(v2_path.join("cpu.max"), cpu_max)?;
+                fs::write(v2_path.join("cpu.max"), cpu_max)
+                    .with_context(|| format!("write {}", v2_path.join("cpu.max").display()))?;
                 let mut weight: u64 = (cpu_quota as u64) * 100;
                 if weight == 0 { weight = 1; }
                 if weight > 10000 { weight = 10000; }
-                fs::write(v2_path.join("cpu.weight"), weight.to_string())?;
+                fs::write(v2_path.join("cpu.weight"), weight.to_string())
+                    .with_context(|| format!("write {}", v2_path.join("cpu.weight").display()))?;
                 Ok(Self { name, path: v2_path, version, cpu_quota, quota_us, cpu_shares })
             }
         }
@@ -72,11 +77,13 @@ impl CgroupController {
         match self.version {
             CgroupVersion::V1 => {
                 let tasks_file = self.path.join("tasks");
-                fs::write(&tasks_file, pid.to_string())?;
+                fs::write(&tasks_file, pid.to_string())
+                    .with_context(|| format!("write {}", tasks_file.display()))?;
             }
             CgroupVersion::V2 => {
                 let procs_file = self.path.join("cgroup.procs");
-                fs::write(&procs_file, pid.to_string())?;
+                fs::write(&procs_file, pid.to_string())
+                    .with_context(|| format!("write {}", procs_file.display()))?;
             }
         }
         Ok(())
