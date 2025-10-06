@@ -1,0 +1,14 @@
+[Unit]
+Description=Auto Nice Daemon (Rust)
+After=multi-user.target
+
+[Service]
+Type=notify
+ExecStart=/usr/local/bin/rust-ananicy start
+Restart=always
+Nice=-10
+CPUAccounting=true
+MemoryAccounting=true
+
+[Install]
+WantedBy=multi-user.target
