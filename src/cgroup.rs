@@ -42,8 +42,10 @@ impl CgroupController {
             CgroupVersion::V1 => {
                 let cpu_path = Path::new(CGROUP_FS).join("cpu").join(&name);
                 if !cpu_path.exists() {
-                    fs::create_dir_all(&cpu_path)
-                        .with_context(|| format!("mkdir {}", cpu_path.display()))?;
+                    if let Err(e) = fs::create_dir_all(&cpu_path)
+                        .with_context(|| format!("mkdir {}", cpu_path.display())) {
+                        warn!("Could not create v1 cgroup directory: {e}");
+                    }
                 }
                 fs::write(cpu_path.join("cpu.cfs_period_us"), PERIOD_US.to_string())
                     .with_context(|| format!("write {}", cpu_path.join("cpu.cfs_period_us").display()))?;
@@ -58,8 +60,10 @@ impl CgroupController {
                 enable_cpu_controller_v2_at(&base)?;
                 let v2_path = base.join(&name);
                 if !v2_path.exists() {
-                    fs::create_dir_all(&v2_path)
-                        .with_context(|| format!("mkdir {}", v2_path.display()))?;
+                    if let Err(e) = fs::create_dir_all(&v2_path)
+                        .with_context(|| format!("mkdir {}", v2_path.display())) {
+                        warn!("Could not create v2 cgroup directory: {e}");
+                    }
                 }
                 let max_value = if cpu_quota >= 100 { String::from("max") } else { quota_us.to_string() };
                 let cpu_max = format!("{} {}", max_value, PERIOD_US);
