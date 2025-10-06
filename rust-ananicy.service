@@ -3,12 +3,16 @@ Description=Auto Nice Daemon (Rust)
 After=multi-user.target
 
 [Service]
-Type=notify
-ExecStart=/usr/local/bin/rust-ananicy start
+Type=simple
+ExecStart=/usr/bin/rust-ananicy start
 Restart=always
 Nice=-10
 CPUAccounting=true
 MemoryAccounting=true
+CapabilityBoundingSet=CAP_SYS_NICE CAP_SYS_RESOURCE CAP_KILL
+AmbientCapabilities=CAP_SYS_NICE CAP_SYS_RESOURCE CAP_KILL
+NoNewPrivileges=false
+LimitNICE=-20
 
 [Install]
 WantedBy=multi-user.target
