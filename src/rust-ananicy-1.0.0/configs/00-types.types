@@ -1,0 +1,35 @@
+{"type": "essential", "nice": -10, "ioclass": "realtime", "ionice": 0}
+{"type": "desktop-environment", "nice": -5, "ioclass": "best-effort", "ionice": 2}
+{"type": "desktop-critical", "nice": -10, "ioclass": "best-effort", "ionice": 0}
+{"type": "ui-app", "nice": -3, "ioclass": "best-effort", "ionice": 3}
+{"type": "productivity", "nice": -2, "ioclass": "best-effort", "ionice": 3}
+{"type": "audio-server", "nice": -15, "ioclass": "realtime", "ionice": 0, "sched": "rr", "rtprio": 10}
+{"type": "audio-player", "nice": -5, "ioclass": "best-effort", "ionice": 2}
+{"type": "video-player", "nice": -5, "ioclass": "best-effort", "ionice": 2}
+{"type": "video-editor", "nice": 0, "ioclass": "best-effort", "ionice": 4}
+{"type": "web-browser", "nice": -1, "ioclass": "best-effort", "ionice": 3}
+{"type": "web-browser-media", "nice": -3, "ioclass": "best-effort", "ionice": 2}
+{"type": "ide", "nice": 0, "ioclass": "best-effort", "ionice": 4}
+{"type": "compiler", "nice": 5, "ioclass": "best-effort", "ionice": 5, "cgroup": "cpu80"}
+{"type": "build-tool", "nice": 5, "ioclass": "best-effort", "ionice": 5}
+{"type": "chat", "nice": -2, "ioclass": "best-effort", "ionice": 3}
+{"type": "email", "nice": 0, "ioclass": "best-effort", "ionice": 4}
+{"type": "video-conference", "nice": -5, "ioclass": "best-effort", "ionice": 2}
+{"type": "file-manager", "nice": -2, "ioclass": "best-effort", "ionice": 3}
+{"type": "terminal", "nice": -1, "ioclass": "best-effort", "ionice": 3}
+{"type": "system-monitor", "nice": 0, "ioclass": "best-effort", "ionice": 4}
+{"type": "backup", "nice": 10, "ioclass": "idle", "cgroup": "cpu50"}
+{"type": "indexer", "nice": 10, "ioclass": "idle", "cgroup": "cpu30"}
+{"type": "updater", "nice": 10, "ioclass": "idle"}
+{"type": "sync", "nice": 10, "ioclass": "idle", "cgroup": "cpu50"}
+{"type": "benchmark", "nice": 0, "ioclass": "best-effort", "ionice": 4}
+{"type": "renderer", "nice": 5, "ioclass": "best-effort", "ionice": 5, "cgroup": "cpu90"}
+{"type": "vm", "nice": 5, "ioclass": "best-effort", "ionice": 5}
+{"type": "container", "nice": 5, "ioclass": "best-effort", "ionice": 5}
+{"type": "game", "nice": -8, "ioclass": "best-effort", "ionice": 0}
+{"type": "game-launcher", "nice": 0, "ioclass": "best-effort", "ionice": 4}
+{"type": "wine-app", "nice": -2, "ioclass": "best-effort", "ionice": 3}
+{"type": "antivirus", "nice": 10, "ioclass": "idle", "cgroup": "cpu30"}
+{"type": "firewall", "nice": -5, "ioclass": "best-effort", "ionice": 2}
+{"type": "torrent", "nice": 15, "ioclass": "idle", "cgroup": "cpu20"}
+{"type": "download-manager", "nice": 10, "ioclass": "idle"}

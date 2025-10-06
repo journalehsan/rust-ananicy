@@ -1,0 +1,29 @@
+{"name": "plasmashell", "type": "desktop-critical", "oom_score_adj": -500}
+{"name": "kwin_x11", "type": "desktop-critical", "oom_score_adj": -500}
+{"name": "kwin_wayland", "type": "desktop-critical", "oom_score_adj": -500}
+{"name": "kded5", "type": "desktop-environment"}
+{"name": "ksmserver", "type": "desktop-environment"}
+{"name": "kaccess", "type": "desktop-environment"}
+{"name": "kglobalaccel5", "type": "desktop-environment"}
+{"name": "kactivitymanagerd", "type": "desktop-environment"}
+{"name": "plasma-browser-integration-host", "type": "desktop-environment"}
+{"name": "polkit-kde-authentication-agent-1", "type": "desktop-environment"}
+{"name": "kde-connect", "type": "desktop-environment"}
+{"name": "kdeconnectd", "type": "desktop-environment"}
+{"name": "gnome-shell", "type": "desktop-critical", "oom_score_adj": -500}
+{"name": "mutter", "type": "desktop-critical"}
+{"name": "gnome-session-binary", "type": "desktop-environment"}
+{"name": "gsd-", "type": "desktop-environment"}
+{"name": "gnome-software", "type": "desktop-environment"}
+{"name": "evolution-alarm-notify", "type": "desktop-environment"}
+{"name": "xfce4-panel", "type": "desktop-critical"}
+{"name": "xfwm4", "type": "desktop-critical"}
+{"name": "xfdesktop", "type": "desktop-environment"}
+{"name": "xfce4-session", "type": "desktop-environment"}
+{"name": "xfce4-power-manager", "type": "desktop-environment"}
+{"name": "Xorg", "type": "desktop-critical", "oom_score_adj": -500}
+{"name": "Xwayland", "type": "desktop-critical", "oom_score_adj": -500}
+{"name": "pipewire", "type": "audio-server", "oom_score_adj": -200}
+{"name": "pipewire-pulse", "type": "audio-server", "oom_score_adj": -200}
+{"name": "wireplumber", "type": "audio-server", "oom_score_adj": -200}
+{"name": "pulseaudio", "type": "audio-server", "oom_score_adj": -200}
