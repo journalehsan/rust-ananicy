@@ -6,7 +6,7 @@ After=multi-user.target
 Type=simple
 ExecStart=/usr/bin/rust-ananicy start
 Restart=always
-Nice=-10
+# Avoid requiring unit-level nice lowering; daemon adjusts per-process
 # CPUAccounting/MemoryAccounting deprecated in recent systemd; removed
 CapabilityBoundingSet=CAP_SYS_NICE CAP_SYS_RESOURCE CAP_KILL
 AmbientCapabilities=CAP_SYS_NICE CAP_SYS_RESOURCE CAP_KILL
